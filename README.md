@@ -3,20 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CT241 - Gestion Logistique</title>
+    <title>CT241 - Portail Logistique Gabon</title>
     
-    <!-- Meta tags pour PWA (Installation mobile) -->
+    <!-- Meta tags pour PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="CT241">
-    <meta name="theme-color" content="#057847">
+    <meta name="apple-mobile-web-app-title" content="CT241 Gabon">
+    <meta name="theme-color" content="#36a100">
     
-    <!-- Favicon utilisant le logo hébergé -->
+    <!-- Favicon et Icônes -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png">
 
-    <!-- Lien Manifeste PWA -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"CT241 Livraison Express","short_name":"CT241","start_url":".","display":"standalone","background_color":"#ffffff","theme_color":"#057847","icons":[{"src":"https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png","sizes":"512x512","type":"image/png"}]}'>
+    <!-- Manifeste PWA amélioré -->
+    <script>
+        const manifest = {
+            "name": "CT241 - Logistique Gabon",
+            "short_name": "CT241",
+            "description": "Portail logistique premium aux couleurs du Gabon",
+            "start_url": "./index.html",
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#36a100",
+            "icons": [
+                {
+                    "src": "https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png",
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "any"
+                }
+            ],
+            "screenshots": [
+                {
+                    "src": "https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png",
+                    "sizes": "1024x1024",
+                    "type": "image/png",
+                    "form_factor": "wide",
+                    "label": "Dashboard CT241 Gabon"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifest);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,10 +68,13 @@
             theme: {
                 extend: {
                     colors: {
+                        gabon: {
+                            green: '#36a100', // Vert drapeau
+                            yellow: '#ffcf00', // Jaune drapeau
+                            blue: '#007fff',   // Bleu drapeau
+                        },
                         ct241: {
-                            green: '#057847', // Vert du texte CT241
-                            blue: '#1e40af',  // Bleu de l'aile
-                            gold: '#fbbf24'   // Jaune/Or de la flèche
+                            dark: '#1a1a1a'
                         }
                     }
                 }
@@ -47,80 +90,91 @@
         .animate-fade-in {
             animation: fadeIn 0.7s ease-out forwards;
         }
+        .gabon-gradient {
+            background: linear-gradient(135deg, #36a100 0%, #ffcf00 50%, #007fff 100%);
+        }
+        .gabon-border {
+            border-image: linear-gradient(to right, #36a100, #ffcf00, #007fff) 1;
+        }
         body {
             -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
-        .logo-shadow {
-            filter: drop-shadow(0 10px 15px rgba(5, 120, 71, 0.2));
+        .logo-glow {
+            box-shadow: 0 0 20px rgba(54, 161, 0, 0.3);
         }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900 overflow-x-hidden">
 
-    <!-- Écran de chargement (Splash Screen) -->
-    <div id="loader" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6 transition-opacity duration-500">
+    <!-- Splash Screen aux couleurs du Gabon -->
+    <div id="loader" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6 transition-opacity duration-700">
         <div class="w-full max-w-md text-center">
-            <div class="mb-8 animate-bounce">
-                <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" alt="Logo CT241" class="w-32 h-32 object-contain mx-auto rounded-2xl logo-shadow">
+            <div class="mb-10 animate-pulse">
+                <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" alt="Logo CT241" class="w-36 h-36 object-contain mx-auto rounded-3xl logo-glow">
             </div>
-            <h2 class="text-ct241-green text-2xl font-black mb-1 tracking-tighter">CT241</h2>
-            <p id="loading-message" class="text-slate-500 mb-8 text-sm font-medium tracking-wide uppercase">Initialisation du portail logistique...</p>
+            <h2 class="text-3xl font-black mb-1 tracking-tighter">
+                <span class="text-gabon-green">CT</span><span class="text-gabon-yellow">2</span><span class="text-gabon-blue">41</span>
+            </h2>
+            <p id="loading-message" class="text-slate-400 mb-8 text-xs font-bold tracking-[0.2em] uppercase">Bienvenue au Gabon</p>
             
-            <div class="w-full bg-slate-100 rounded-full h-1.5 mb-4 overflow-hidden max-w-[250px] mx-auto">
-                <div id="progress-bar" class="bg-ct241-green h-full w-0 transition-all duration-300 ease-out"></div>
+            <!-- Barre de progression tricolore -->
+            <div class="w-full bg-slate-100 rounded-full h-2 mb-4 overflow-hidden max-w-[280px] mx-auto flex">
+                <div id="progress-bar-green" class="h-full w-0 bg-gabon-green transition-all duration-300"></div>
+                <div id="progress-bar-yellow" class="h-full w-0 bg-gabon-yellow transition-all duration-300"></div>
+                <div id="progress-bar-blue" class="h-full w-0 bg-gabon-blue transition-all duration-300"></div>
             </div>
-            <p id="progress-text" class="text-slate-400 text-xs font-mono">0%</p>
+            <p id="progress-text" class="text-slate-400 text-[10px] font-mono font-bold">SYSTÈME EN COURS...</p>
         </div>
     </div>
 
-    <!-- Bannière d'installation -->
-    <div id="install-banner" class="fixed bottom-6 left-6 right-6 bg-ct241-green text-white p-4 rounded-2xl shadow-2xl z-[60] flex items-center justify-between hidden animate-fade-in">
-        <div class="flex items-center gap-3">
-            <div class="bg-white p-1 rounded-lg">
-                <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" class="w-8 h-8 object-contain">
+    <!-- Bannière d'installation stylisée -->
+    <div id="install-banner" class="fixed bottom-8 left-6 right-6 gabon-gradient p-0.5 rounded-3xl shadow-2xl z-[60] hidden animate-fade-in">
+        <div class="bg-white p-4 rounded-[1.4rem] flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+                    <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" class="w-10 h-10 object-contain">
+                </div>
+                <div>
+                    <p class="font-black text-slate-800 text-sm">Installer CT241</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">L'app officielle du Gabon</p>
+                </div>
             </div>
-            <div>
-                <p class="font-bold text-sm text-white">Installer CT241</p>
-                <p class="text-xs text-green-100 font-medium">Accès direct sur votre écran.</p>
-            </div>
+            <button id="btn-install" class="gabon-gradient text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-lg active:scale-95 transition-all">
+                INSTALLER
+            </button>
         </div>
-        <button id="btn-install" class="bg-white text-ct241-green px-4 py-2 rounded-xl text-sm font-bold shadow-sm active:scale-95 transition-transform">Installer</button>
     </div>
 
-    <!-- Modal Tuto / Bienvenue -->
-    <div id="tuto-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md transition-all">
-        <div class="bg-white rounded-[2.5rem] max-w-lg w-full shadow-2xl overflow-hidden scale-95 transition-transform duration-300 border border-slate-100">
-            <div class="p-8">
-                <div class="text-center mb-8">
-                    <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" class="w-20 h-20 object-contain mx-auto mb-4 rounded-xl">
-                    <h3 class="text-2xl font-black text-slate-800 tracking-tight">Bienvenue chez CT241</h3>
-                    <p class="text-slate-500 text-sm font-medium">Livraison Express et Logistique</p>
+    <!-- Modal de Bienvenue Gabon -->
+    <div id="tuto-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xl transition-all">
+        <div class="bg-white rounded-[3rem] max-w-lg w-full shadow-2xl overflow-hidden scale-95 transition-transform duration-500">
+            <div class="p-10 text-center">
+                <div class="mb-6 relative inline-block">
+                    <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" class="w-24 h-24 object-contain mx-auto rounded-2xl logo-glow relative z-10">
+                    <div class="absolute -inset-2 gabon-gradient blur-xl opacity-20"></div>
                 </div>
+                
+                <h3 class="text-3xl font-black text-slate-800 tracking-tight mb-2">Bienvenue au Gabon</h3>
+                <p class="text-slate-500 text-sm font-medium mb-8">Votre partenaire logistique national de confiance.</p>
 
-                <div class="space-y-4 mb-8 text-left">
-                    <div class="flex gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                        <div class="bg-white p-2.5 rounded-xl shadow-sm text-ct241-green h-fit">
-                            <i data-lucide="package-check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 text-sm">Gestion Unifiée</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed">Centralisez vos commandes et livraisons sur un seul terminal mobile.</p>
-                        </div>
+                <div class="grid grid-cols-3 gap-3 mb-10">
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <i data-lucide="shield-check" class="w-6 h-6 mx-auto text-gabon-green mb-2"></i>
+                        <p class="text-[9px] font-black text-emerald-800 uppercase">Sécurité</p>
                     </div>
-                    <div class="flex gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                        <div class="bg-white p-2.5 rounded-xl shadow-sm text-ct241-blue h-fit">
-                            <i data-lucide="zap" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 text-sm">Vitesse & Précision</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed">Interface fluide conçue pour les opérations sur le terrain.</p>
-                        </div>
+                    <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                        <i data-lucide="zap" class="w-6 h-6 mx-auto text-gabon-yellow mb-2"></i>
+                        <p class="text-[9px] font-black text-amber-800 uppercase">Vitesse</p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                        <i data-lucide="map-pin" class="w-6 h-6 mx-auto text-gabon-blue mb-2"></i>
+                        <p class="text-[9px] font-black text-blue-800 uppercase">Local</p>
                     </div>
                 </div>
 
-                <button onclick="closeTuto()" class="w-full bg-ct241-green text-white py-4 rounded-2xl font-bold hover:bg-opacity-90 active:scale-95 transition-all shadow-lg shadow-green-900/10">
-                    Accéder au Dashboard
+                <button onclick="closeTuto()" class="w-full gabon-gradient text-white py-5 rounded-2xl font-black text-sm tracking-widest shadow-xl shadow-blue-500/20 active:scale-95 transition-all">
+                    DÉMARRER L'EXPÉRIENCE
                 </button>
             </div>
         </div>
@@ -128,81 +182,85 @@
 
     <!-- Contenu Principal -->
     <div id="main-content" class="invisible">
-        <header class="bg-white border-b border-slate-100 py-4 px-6 mb-8 shadow-sm sticky top-0 z-40">
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 py-5 px-8 mb-8 sticky top-0 z-40">
             <div class="max-w-6xl mx-auto flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" alt="Logo" class="w-10 h-10 object-contain rounded-lg">
-                    <div>
-                        <h1 class="text-lg font-black tracking-tighter text-ct241-green leading-none">CT241</h1>
-                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Express Hub</span>
+                    <div class="p-1 gabon-gradient rounded-xl">
+                        <img src="https://i.ibb.co/xKY76DgR/Gemini-Generated-Image-1pvtp31pvtp31pvt-1.png" alt="Logo" class="w-10 h-10 object-contain rounded-lg bg-white p-0.5">
                     </div>
+                    <h1 class="text-xl font-black tracking-tighter">
+                        <span class="text-gabon-green">CT</span><span class="text-gabon-yellow">2</span><span class="text-gabon-blue">41</span>
+                    </h1>
                 </div>
-                <button onclick="openTuto()" class="bg-slate-50 p-2.5 rounded-xl text-slate-400 hover:text-ct241-green transition-colors border border-slate-100">
-                    <i data-lucide="help-circle" class="w-5 h-5"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-gabon-green animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Connecté</span>
+                </div>
             </div>
         </header>
 
-        <main class="max-w-6xl mx-auto px-6 pb-24 animate-fade-in">
-            <div class="mb-10">
-                <h2 class="text-2xl font-black text-slate-800 tracking-tight">Tableau de Bord</h2>
-                <p class="text-slate-400 text-sm font-medium">Sélectionnez votre zone d'opération.</p>
+        <main class="max-w-6xl mx-auto px-6 pb-28 animate-fade-in">
+            <div class="mb-12">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-2">Services <span class="text-gabon-green">Premium</span></h2>
+                <div class="h-1 w-20 gabon-gradient rounded-full"></div>
             </div>
 
-            <div id="apps-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Cartes injectées ici -->
+            <div id="apps-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cartes injectées par JS -->
             </div>
         </main>
 
-        <!-- Nav basse style App -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-8 py-4 flex justify-around items-center z-40 md:hidden">
-            <div class="text-ct241-green flex flex-col items-center gap-1">
-                <i data-lucide="layout-grid" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">Menu</span>
+        <!-- Navigation mobile flottante style "GABON" -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white/90 backdrop-blur-lg border border-slate-200/50 rounded-full px-8 py-4 flex justify-between items-center shadow-2xl z-40 md:hidden">
+            <div class="text-gabon-green flex flex-col items-center gap-1">
+                <div class="bg-gabon-green/10 p-2 rounded-full"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
             </div>
             <div class="text-slate-300 flex flex-col items-center gap-1">
-                <i data-lucide="history" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">Archives</span>
+                <i data-lucide="package" class="w-6 h-6"></i>
             </div>
             <div class="text-slate-300 flex flex-col items-center gap-1" onclick="openTuto()">
-                <i data-lucide="user-cog" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">Profil</span>
+                <i data-lucide="info" class="w-6 h-6"></i>
             </div>
-        </nav>
+        </div>
     </div>
 
     <script>
-        // PWA registration
+        // PWA - Enregistrement Service Worker
         if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));`;
-            const blob = new Blob([swCode], { type: 'text/javascript' });
-            navigator.serviceWorker.register(URL.createObjectURL(blob));
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', (e) => self.skipWaiting());
+                    self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));
+                `;
+                const blob = new Blob([swCode], { type: 'text/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob));
+            });
         }
 
         const apps = [
-            {
-                title: "Commandes",
-                url: "https://newsmiley21-star.github.io/commandes.html",
-                icon: "shopping-bag",
-                color: "text-ct241-blue",
-                bg: "bg-blue-50",
-                desc: "Gestion des commandes flux CT241."
+            { 
+                title: "Commandes", 
+                url: "https://newsmiley21-star.github.io/commandes.html", 
+                icon: "shopping-bag", 
+                color: "text-gabon-blue", 
+                bg: "bg-blue-50", 
+                desc: "Gestion des flux de commandes nationales." 
             },
-            {
-                title: "Livraison",
-                url: "https://newsmiley21-star.github.io/livraison.index.html",
-                icon: "truck",
-                color: "text-ct241-green",
-                bg: "bg-emerald-50",
-                desc: "Suivi logistique et expéditions."
+            { 
+                title: "Livraison", 
+                url: "https://newsmiley21-star.github.io/livraison.index.html", 
+                icon: "truck", 
+                color: "text-gabon-green", 
+                bg: "bg-emerald-50", 
+                desc: "Suivi des expéditions à travers le Gabon." 
             },
-            {
-                title: "Personnel",
-                url: "https://newsmiley21-star.github.io/index.html#suivi-des-gains",
-                icon: "bar-chart-3",
-                color: "text-ct241-gold",
-                bg: "bg-amber-50",
-                desc: "Calcul des gains et performances."
+            { 
+                title: "Personnel", 
+                url: "https://newsmiley21-star.github.io/index.html#suivi-des-gains", 
+                icon: "trending-up", 
+                color: "text-gabon-yellow", 
+                bg: "bg-amber-50", 
+                desc: "Analytiques et performances logistiques." 
             }
         ];
 
@@ -225,17 +283,15 @@
         function initGrid() {
             const grid = document.getElementById('apps-grid');
             grid.innerHTML = apps.map(app => `
-                <a href="${app.url}" class="group block bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-ct241-green/20 hover:-translate-y-1">
-                    <div class="flex items-center gap-5">
-                        <div class="${app.bg} ${app.color} w-16 h-16 rounded-[1.25rem] flex items-center justify-center shadow-inner">
-                            <i data-lucide="${app.icon}" class="w-8 h-8"></i>
+                <a href="${app.url}" class="group block bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-sm transition-all duration-500 hover:shadow-2xl hover:border-gabon-yellow/20 hover:-translate-y-2 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 gabon-gradient opacity-0 group-hover:opacity-5 transition-opacity blur-3xl"></div>
+                    <div class="flex items-center gap-6 relative z-10">
+                        <div class="${app.bg} ${app.color} w-20 h-20 rounded-3xl flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="${app.icon}" class="w-10 h-10"></i>
                         </div>
                         <div class="flex-1">
-                            <h3 class="font-black text-slate-800 text-lg leading-tight">${app.title}</h3>
-                            <p class="text-xs text-slate-400 font-medium mt-1">${app.desc}</p>
-                        </div>
-                        <div class="bg-slate-50 p-2 rounded-full text-slate-300 group-hover:text-ct241-green group-hover:bg-green-50 transition-all">
-                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                            <h3 class="font-black text-slate-900 text-xl tracking-tight leading-tight">${app.title}</h3>
+                            <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wide mt-1">${app.desc}</p>
                         </div>
                     </div>
                 </a>
@@ -244,46 +300,54 @@
         }
 
         function startLoading() {
-            const bar = document.getElementById('progress-bar');
+            const barG = document.getElementById('progress-bar-green');
+            const barY = document.getElementById('progress-bar-yellow');
+            const barB = document.getElementById('progress-bar-blue');
             const text = document.getElementById('progress-text');
-            const msg = document.getElementById('loading-message');
-            const messages = ["Sécurisation du tunnel...", "Chargement de la logistique...", "Optimisation CT241...", "Prêt."];
             let p = 0;
             const int = setInterval(() => {
-                p += Math.random() * 25;
+                p += 4;
                 if (p >= 100) {
                     p = 100;
                     clearInterval(int);
-                    setTimeout(finishLoading, 400);
+                    setTimeout(finishLoading, 600);
                 }
-                bar.style.width = p + '%';
-                text.innerText = Math.round(p) + '%';
-                msg.innerText = messages[Math.floor((p/101) * messages.length)];
-            }, 180);
+                
+                // On remplit les barres successivement pour simuler le drapeau
+                if(p <= 33) barG.style.width = (p * 3) + '%';
+                else if(p <= 66) {
+                    barG.style.width = '100%';
+                    barY.style.width = ((p - 33) * 3) + '%';
+                } else {
+                    barY.style.width = '100%';
+                    barB.style.width = ((p - 66) * 3) + '%';
+                }
+                
+                text.innerText = p + '% - CHARGEMENT GABON';
+            }, 80);
         }
 
         function finishLoading() {
-            document.getElementById('loader').style.opacity = '0';
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('loader').style.display = 'none';
+                loader.style.display = 'none';
                 document.getElementById('main-content').classList.remove('invisible');
-                if(!localStorage.getItem('ct241_tuto_done')) {
+                if(!localStorage.getItem('gabon_pwa_v1')) {
                     openTuto();
-                    localStorage.setItem('ct241_tuto_done', 'true');
+                    localStorage.setItem('gabon_pwa_v1', 'true');
                 }
-            }, 500);
+            }, 700);
         }
 
         function openTuto() {
             const m = document.getElementById('tuto-modal');
             m.classList.replace('hidden', 'flex');
-            setTimeout(() => m.querySelector('div').classList.replace('scale-95', 'scale-100'), 10);
         }
 
         function closeTuto() {
             const m = document.getElementById('tuto-modal');
-            m.querySelector('div').classList.replace('scale-100', 'scale-95');
-            setTimeout(() => m.classList.replace('flex', 'hidden'), 200);
+            m.classList.replace('flex', 'hidden');
         }
 
         window.onload = () => {
