@@ -253,6 +253,14 @@
                 color: "text-gabon-green", 
                 bg: "bg-emerald-50", 
                 desc: "Traitement et Suivi des expéditions à travers le Gabon." 
+            }, 
+            { 
+                title: "Reservé au personnel", 
+                url: "https://newsmiley21-star.github.io/index.html/#suivi-des-gains", 
+                icon: "motorcycle", 
+                color: "text-gabon-yellow", 
+                bg: "bg-amber-50", 
+                desc: "Gestion des livraisons DDP customers ." 
             },
             { 
                 title: "comptabilité & management", 
